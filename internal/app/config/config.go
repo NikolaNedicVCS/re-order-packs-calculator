@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
@@ -12,6 +13,7 @@ import (
 type Config struct {
 	Env      string
 	LogLevel string
+	HTTPPort string
 }
 
 // Load config from .env if it exists. If it doesn't, fall back to real env vars.
@@ -27,6 +29,7 @@ func Load() (Config, error) {
 	cfg := Config{
 		Env:      getEnv("APP_ENV", "dev"),
 		LogLevel: getEnv("LOG_LEVEL", "info"),
+		HTTPPort: getEnv("HTTP_PORT", "8080"),
 	}
 
 	if err := validate(cfg); err != nil {
@@ -45,10 +48,26 @@ func validate(cfg Config) error {
 	if strings.TrimSpace(cfg.LogLevel) == "" {
 		errs = append(errs, "LOG_LEVEL is required")
 	}
+	if strings.TrimSpace(cfg.HTTPPort) == "" {
+		errs = append(errs, "HTTP_PORT is required")
+	} else if err := validateHTTPPort(cfg.HTTPPort); err != nil {
+		errs = append(errs, "HTTP_PORT is invalid: "+err.Error())
+	}
 	if len(errs) > 0 {
 		return errors.New(strings.Join(errs, "; "))
 	}
 
+	return nil
+}
+
+func validateHTTPPort(port string) error {
+	p, err := strconv.Atoi(strings.TrimSpace(port))
+	if err != nil {
+		return fmt.Errorf("must be a number, provided: %s", port)
+	}
+	if p < 1 || p > 65535 {
+		return fmt.Errorf("must be between 1 and 65535, provided: %d", p)
+	}
 	return nil
 }
 
@@ -57,10 +76,4 @@ func getEnv(key, fallback string) string {
 		return v
 	}
 	return fallback
-}
-
-func (c *Config) PrintEnv() {
-	fmt.Println("Env:")
-	fmt.Printf("APP_ENV: %s\n", c.Env)
-	fmt.Printf("LOG_LEVEL: %s\n", c.LogLevel)
 }
