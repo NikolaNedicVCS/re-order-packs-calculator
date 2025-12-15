@@ -6,5 +6,12 @@ import (
 )
 
 func DefineRoutes(r chi.Router) {
-	r.Post("/api/packs/reset", handlers.ResetPackSizesHandler)
+	r.Route("/api/packs", func(r chi.Router) {
+		r.Get("/", handlers.ListPackSizesHandler)
+		r.Post("/", handlers.CreatePackSizeHandler)
+		r.Put("/{id}", handlers.UpdatePackSizeHandler)
+		r.Delete("/{id}", handlers.DeletePackSizeHandler)
+
+		r.Post("/reset", handlers.ResetPackSizesHandler)
+	})
 }
