@@ -10,7 +10,8 @@ import (
 )
 
 type Config struct {
-	Env string
+	Env      string
+	LogLevel string
 }
 
 // Load config from .env if it exists. If it doesn't, fall back to real env vars.
@@ -24,7 +25,8 @@ func Load() (Config, error) {
 	}
 
 	cfg := Config{
-		Env: getEnv("APP_ENV", "dev"),
+		Env:      getEnv("APP_ENV", "dev"),
+		LogLevel: getEnv("LOG_LEVEL", "info"),
 	}
 
 	if err := validate(cfg); err != nil {
@@ -40,6 +42,9 @@ func validate(cfg Config) error {
 	if strings.TrimSpace(cfg.Env) == "" {
 		errs = append(errs, "APP_ENV is required")
 	}
+	if strings.TrimSpace(cfg.LogLevel) == "" {
+		errs = append(errs, "LOG_LEVEL is required")
+	}
 	if len(errs) > 0 {
 		return errors.New(strings.Join(errs, "; "))
 	}
@@ -52,4 +57,10 @@ func getEnv(key, fallback string) string {
 		return v
 	}
 	return fallback
+}
+
+func (c *Config) PrintEnv() {
+	fmt.Println("Env:")
+	fmt.Printf("APP_ENV: %s\n", c.Env)
+	fmt.Printf("LOG_LEVEL: %s\n", c.LogLevel)
 }
