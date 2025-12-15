@@ -14,6 +14,7 @@ func NewHTTPHandler() http.Handler {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(httpmw.RequestLogger)
+	r.Use(middleware.Timeout(10 * time.Second))
 	r.Use(middleware.Recoverer)
 
 	DefineRoutes(r)

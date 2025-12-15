@@ -14,6 +14,7 @@ type Config struct {
 	Env      string
 	LogLevel string
 	HTTPPort string
+	DBPath   string
 }
 
 // Load config from .env if it exists. If it doesn't, fall back to real env vars.
@@ -30,6 +31,7 @@ func Load() (Config, error) {
 		Env:      getEnv("APP_ENV", "dev"),
 		LogLevel: getEnv("LOG_LEVEL", "info"),
 		HTTPPort: getEnv("HTTP_PORT", "8080"),
+		DBPath:   getEnv("DB_PATH", "./data/app.db"),
 	}
 
 	if err := validate(cfg); err != nil {
@@ -52,6 +54,9 @@ func validate(cfg Config) error {
 		errs = append(errs, "HTTP_PORT is required")
 	} else if err := validateHTTPPort(cfg.HTTPPort); err != nil {
 		errs = append(errs, "HTTP_PORT is invalid: "+err.Error())
+	}
+	if strings.TrimSpace(cfg.DBPath) == "" {
+		errs = append(errs, "DB_PATH is required")
 	}
 	if len(errs) > 0 {
 		return errors.New(strings.Join(errs, "; "))
