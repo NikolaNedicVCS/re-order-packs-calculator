@@ -22,6 +22,10 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request) {
 		response.WriteError(w, http.StatusBadRequest, "quantity must be > 0")
 		return
 	}
+	if req.Quantity > 50_000_000 {
+		response.WriteError(w, http.StatusBadRequest, "quantity too large")
+		return
+	}
 
 	packs, err := repository.PackSizes().List(r.Context())
 	if err != nil {

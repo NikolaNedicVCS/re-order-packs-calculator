@@ -49,6 +49,15 @@ func TestCalculateHandler_InvalidQuantity(t *testing.T) {
 	mustJSONEqual(t, rr, `{"error":{"message":"quantity must be > 0"}}`)
 }
 
+func TestCalculateHandler_QuantityTooLarge(t *testing.T) {
+	h := http_server.NewHTTPHandler()
+	rr := doJSON(t, h, http.MethodPost, "/api/calculate", models.CalculateRequest{Quantity: 50_000_001})
+	if rr.Code != http.StatusBadRequest {
+		t.Fatalf("expected 400, got %d body=%s", rr.Code, rr.Body.String())
+	}
+	mustJSONEqual(t, rr, `{"error":{"message":"quantity too large"}}`)
+}
+
 type fakeCalculator struct {
 	calcFn func(quantity int, packSizes []models.PackSize) ([]models.PackAllocation, error)
 }
