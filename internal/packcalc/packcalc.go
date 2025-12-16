@@ -7,7 +7,7 @@ import (
 	"math"
 	"sort"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/models"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/models"
 )
 
 var (

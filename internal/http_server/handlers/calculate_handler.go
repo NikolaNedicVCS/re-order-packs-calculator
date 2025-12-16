@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/http_server/response"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/log"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/models"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/packcalc"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/repository"
 	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/constants"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/http_server/response"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/log"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/models"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/packcalc"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/repository"
 )
 
 func CalculateHandler(w http.ResponseWriter, r *http.Request) {

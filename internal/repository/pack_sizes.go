@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/db"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/models"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/db"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/models"
 )
 
 var (

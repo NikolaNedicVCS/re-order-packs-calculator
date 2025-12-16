@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/config"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/log"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/server"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/config"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/log"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/server"
 )
 
 func main() {

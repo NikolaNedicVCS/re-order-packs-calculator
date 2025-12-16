@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	httpmw "github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/http_server/middleware"
+	httpmw "github.com/NikolaNedicVCS/re-order-packs-calculator/internal/http_server/middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )

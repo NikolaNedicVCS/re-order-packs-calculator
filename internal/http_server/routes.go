@@ -1,7 +1,7 @@
 package http_server
 
 import (
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/http_server/handlers"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/http_server/handlers"
 	"github.com/go-chi/chi/v5"
 )
 

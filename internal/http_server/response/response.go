@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/log"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/log"
 )
 
 type ErrorResponse struct {

@@ -9,10 +9,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/config"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/db"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/http_server"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/log"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/config"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/db"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/http_server"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/log"
 )
 
 type Server struct {

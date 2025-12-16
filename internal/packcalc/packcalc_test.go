@@ -3,7 +3,7 @@ package packcalc
 import (
 	"testing"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/models"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/models"
 )
 
 func resetCalculatorToDefault(t *testing.T) {

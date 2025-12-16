@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/log"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/log"
 	"github.com/go-chi/chi/v5/middleware"
 )
 

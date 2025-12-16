@@ -9,10 +9,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/http_server"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/models"
-	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/repository"
 	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/constants"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/http_server"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/models"
+	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/repository"
 )
 
 type fakePackSizesRepo struct {
