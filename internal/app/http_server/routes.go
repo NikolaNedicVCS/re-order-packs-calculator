@@ -14,4 +14,6 @@ func DefineRoutes(r chi.Router) {
 
 		r.Post("/reset", handlers.ResetPackSizesHandler)
 	})
+
+	r.Post("/api/calculate", handlers.CalculateHandler)
 }

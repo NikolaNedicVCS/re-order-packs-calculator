@@ -85,11 +85,6 @@ func mustJSONEqual(t *testing.T, rr *httptest.ResponseRecorder, expectedJSON str
 }
 
 func TestPackSizesCRUDAndReset(t *testing.T) {
-	orig := repository.PackSizes()
-	t.Cleanup(func() {
-		repository.SetPackSizesRepository(orig)
-	})
-
 	fake := &fakePackSizesRepo{
 		listFn: func(ctx context.Context) ([]models.PackSize, error) {
 			_ = ctx
