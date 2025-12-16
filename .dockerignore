@@ -1,0 +1,17 @@
+.git
+.vscode
+.idea
+
+*.db
+data
+
+materials
+.DS_Store
+
+__debug_bin*
+terminals
+
+env.example
+.env
+
+
