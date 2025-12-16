@@ -46,6 +46,12 @@ func TestCalculate_InvalidInputs(t *testing.T) {
 			t.Fatalf("expected ErrInvalidPackSizes, got %v", err)
 		}
 	})
+
+	t.Run("quantity too large", func(t *testing.T) {
+		if _, err := Calculate(50_000_000, []models.PackSize{{Size: 250}, {Size: 500}}); err != ErrQuantityTooLarge {
+			t.Fatalf("expected ErrQuantityTooLarge, got %v", err)
+		}
+	})
 }
 
 func TestCalculate_SpecificCases(t *testing.T) {

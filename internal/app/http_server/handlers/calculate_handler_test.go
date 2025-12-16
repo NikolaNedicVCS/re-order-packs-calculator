@@ -91,6 +91,7 @@ func TestCalculateHandler_ErrorMappingFromPackcalc(t *testing.T) {
 		wantMessage string
 	}{
 		{"ErrInvalidQuantity -> 400", packcalc.ErrInvalidQuantity, http.StatusBadRequest, "quantity must be > 0"},
+		{"ErrQuantityTooLarge -> 400", packcalc.ErrQuantityTooLarge, http.StatusBadRequest, "quantity too large"},
 		{"ErrNoPackSizes -> 400", packcalc.ErrNoPackSizes, http.StatusBadRequest, "no pack sizes configured"},
 		{"ErrInvalidPackSizes -> 400", packcalc.ErrInvalidPackSizes, http.StatusBadRequest, "invalid pack sizes configured"},
 		{"default -> 500", errors.New("boom"), http.StatusInternalServerError, constants.InternalServerErrorMsg},

@@ -6,6 +6,9 @@ import (
 )
 
 func DefineRoutes(r chi.Router) {
+	r.Get("/", handlers.UIIndexHandler)
+	r.Get("/assets/*", handlers.UIAssetsHandler)
+
 	r.Route("/api/packs", func(r chi.Router) {
 		r.Get("/", handlers.ListPackSizesHandler)
 		r.Post("/", handlers.CreatePackSizeHandler)

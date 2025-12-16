@@ -36,6 +36,9 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request) {
 		case packcalc.ErrInvalidQuantity:
 			response.WriteError(w, http.StatusBadRequest, "quantity must be > 0")
 			return
+		case packcalc.ErrQuantityTooLarge:
+			response.WriteError(w, http.StatusBadRequest, "quantity too large")
+			return
 		case packcalc.ErrNoPackSizes:
 			response.WriteError(w, http.StatusBadRequest, "no pack sizes configured")
 			return

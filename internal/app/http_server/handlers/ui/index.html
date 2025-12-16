@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Order Packs Calculator</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Order Packs Calculator</h1>
+        <p class="muted">Manage pack sizes and calculate pack allocations.</p>
+      </header>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Pack sizes</h2>
+          <div class="actions">
+            <button id="resetBtn" class="btn btn-secondary">Reset to defaults</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <form id="createForm" class="inline-form">
+            <label class="label">
+              New size
+              <input id="createSize" type="number" min="1" step="1" placeholder="e.g. 250" required />
+            </label>
+            <button class="btn btn-primary" type="submit">Add</button>
+          </form>
+          <div id="packsMsg" class="msg"></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 40%">ID</th>
+                <th style="width: 40%">Size</th>
+                <th style="width: 20%">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="packsTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Calculate</h2>
+        </div>
+        <form id="calcForm" class="inline-form">
+          <label class="label">
+            Quantity
+            <input id="calcQty" type="number" min="1" step="1" placeholder="e.g. 12001" required />
+          </label>
+          <button class="btn btn-primary" type="submit">Calculate</button>
+        </form>
+        <div id="calcMsg" class="msg"></div>
+
+        <div class="result">
+          <h3 class="result-title">Result</h3>
+          <ul id="calcResult" class="result-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
+
+

@@ -4,6 +4,7 @@ import (
 	"container/heap"
 	"errors"
 	"fmt"
+	"math"
 	"sort"
 
 	"github.com/NikolaNedicVCS/re-order-packs-calculator/internal/app/models"
@@ -13,7 +14,10 @@ var (
 	ErrInvalidQuantity  = errors.New("invalid quantity")
 	ErrNoPackSizes      = errors.New("no pack sizes")
 	ErrInvalidPackSizes = errors.New("invalid pack sizes")
+	ErrQuantityTooLarge = errors.New("quantity too large")
 )
+
+const maxExactSumForDP = 2_000_000
 
 type Calculator interface {
 	// Calculate returns a pack allocation that fulfills quantity using whole packs, minimizing:
@@ -48,6 +52,11 @@ func (defaultCalculator) Calculate(quantity int, packSizes []models.PackSize) ([
 		return nil, ErrInvalidQuantity
 	}
 
+	// limit extremely large quantities
+	if quantity > maxExactSumForDP {
+		return nil, ErrQuantityTooLarge
+	}
+
 	sizes := make([]int, 0, len(packSizes))
 	for _, p := range packSizes {
 		sizes = append(sizes, p.Size)
@@ -64,6 +73,10 @@ func (defaultCalculator) Calculate(quantity int, packSizes []models.PackSize) ([
 	minSum, err := minimalShippedAtLeast(quantity, sizes)
 	if err != nil {
 		return nil, err
+	}
+
+	if minSum > maxExactSumForDP {
+		return nil, ErrQuantityTooLarge
 	}
 
 	counts, err := minPacksForExactSum(minSum, sizes)
@@ -106,9 +119,9 @@ func normalizePackSizes(in []int) ([]int, error) {
 // for each residue, then lifts each residue by adding the smallest pack size as needed.
 func minimalShippedAtLeast(quantity int, sizes []int) (int, error) {
 	m := sizes[0]
-	const inf = int(^uint(0) >> 1)
+	const inf = int64(math.MaxInt64)
 
-	dist := make([]int, m)
+	dist := make([]int64, m)
 	prevRes := make([]int, m)
 	prevSize := make([]int, m)
 	for i := 0; i < m; i++ {
@@ -129,7 +142,7 @@ func minimalShippedAtLeast(quantity int, sizes []int) (int, error) {
 		}
 		for _, s := range sizes {
 			nr := (cur.res + s) % m
-			ns := cur.sum + s
+			ns := cur.sum + int64(s)
 			if ns < dist[nr] {
 				dist[nr] = ns
 				prevRes[nr] = cur.res
@@ -140,15 +153,20 @@ func minimalShippedAtLeast(quantity int, sizes []int) (int, error) {
 	}
 
 	best := inf
+	q := int64(quantity)
 	for r := 0; r < m; r++ {
 		if dist[r] == inf {
 			continue
 		}
 		cand := dist[r]
-		if cand < quantity {
-			need := quantity - cand
-			k := (need + m - 1) / m
-			cand = cand + k*m
+		if cand < q {
+			need := q - cand
+			k := (need + int64(m) - 1) / int64(m)
+			// Overflow safety.
+			if k > 0 && cand > math.MaxInt64-k*int64(m) {
+				return 0, ErrQuantityTooLarge
+			}
+			cand = cand + k*int64(m)
 		}
 		if cand < best {
 			best = cand
@@ -157,7 +175,10 @@ func minimalShippedAtLeast(quantity int, sizes []int) (int, error) {
 	if best == inf {
 		return 0, fmt.Errorf("no solution")
 	}
-	return best, nil
+	if best > int64(math.MaxInt) {
+		return 0, ErrQuantityTooLarge
+	}
+	return int(best), nil
 }
 
 // minPacksForExactSum computes the minimum number of packs needed to reach exactSum.
@@ -216,7 +237,7 @@ func minPacksForExactSum(exactSum int, sizes []int) (map[int]int, error) {
 
 type resNode struct {
 	res int
-	sum int
+	sum int64
 }
 
 type resPQ []resNode
