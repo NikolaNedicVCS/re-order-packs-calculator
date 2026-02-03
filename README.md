@@ -18,6 +18,12 @@ This is a small “production-grade” Go application that:
 - **Logging**: `log/slog` JSON to stdout
 - **Config**: environment variables with optional `.env` (local)
 
+## Production
+
+Production URL: https://re-order-packs-calculator.onrender.com/
+
+The app is hosted on free Render plan which shuts down non active apps and cleans any local storage. For everything to work properly, allow Render to wake up the app (for up to a minute) and hit "Reset to defaults" button to repopulate the DB.
+
 ## Run locally
 
 1) Create a `.env` from the example:
